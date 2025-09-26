@@ -2,30 +2,10 @@ import React, { useState } from 'react';
 import { employeeAPI } from '../services/api';
 import toast from 'react-hot-toast';
 import TableControls from './TableControls';
-import ColumnVisibility from './ColumnVisibility';
 import ExportData from './ExportData';
 
 const EmployeeList = ({ employees, onEdit, onDelete, onRefresh, searchTerm = '' }) => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
-  const [visibleColumns, setVisibleColumns] = useState({
-    name: true,
-    email: true,
-    position: true
-  });
-
-  const columns = [
-    { key: 'name', label: 'Name' },
-    { key: 'email', label: 'Email' },
-    { key: 'position', label: 'Position' }
-  ];
-
-  // Column visibility toggle
-  const handleToggleColumn = (columnKey) => {
-    setVisibleColumns(prev => ({
-      ...prev,
-      [columnKey]: !prev[columnKey]
-    }));
-  };
 
   // Sorting function
   const handleSort = (key) => {
@@ -112,87 +92,68 @@ const EmployeeList = ({ employees, onEdit, onDelete, onRefresh, searchTerm = '' 
           filteredCount={sortedEmployees.length}
           searchTerm={searchTerm}
         />
-        <div className="flex items-center space-x-3">
-          <ExportData
-            employees={sortedEmployees}
-            searchTerm={searchTerm}
-            sortConfig={sortConfig}
-          />
-          <ColumnVisibility
-            columns={columns}
-            visibleColumns={visibleColumns}
-            onToggleColumn={handleToggleColumn}
-          />
-        </div>
+        <ExportData
+          employees={sortedEmployees}
+          searchTerm={searchTerm}
+          sortConfig={sortConfig}
+        />
       </div>
 
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
-          <thead className="bg-gray-50">
-            <tr>
-              {visibleColumns.name && (
-                <th 
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
-                  onClick={() => handleSort('name')}
-                >
-                  <div className="flex items-center space-x-1">
-                    <span>Name</span>
-                    {getSortIcon('name')}
-                  </div>
-                </th>
-              )}
-              {visibleColumns.email && (
-                <th 
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
-                  onClick={() => handleSort('email')}
-                >
-                  <div className="flex items-center space-x-1">
-                    <span>Email</span>
-                    {getSortIcon('email')}
-                  </div>
-                </th>
-              )}
-              {visibleColumns.position && (
-                <th 
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
-                  onClick={() => handleSort('position')}
-                >
-                  <div className="flex items-center space-x-1">
-                    <span>Position</span>
-                    {getSortIcon('position')}
-                  </div>
-                </th>
-              )}
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
+        <thead className="bg-gray-50">
+          <tr>
+            <th 
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
+              onClick={() => handleSort('name')}
+            >
+              <div className="flex items-center space-x-1">
+                <span>Name</span>
+                {getSortIcon('name')}
+              </div>
+            </th>
+            <th 
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
+              onClick={() => handleSort('email')}
+            >
+              <div className="flex items-center space-x-1">
+                <span>Email</span>
+                {getSortIcon('email')}
+              </div>
+            </th>
+            <th 
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
+              onClick={() => handleSort('position')}
+            >
+              <div className="flex items-center space-x-1">
+                <span>Position</span>
+                {getSortIcon('position')}
+              </div>
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Actions
+            </th>
+          </tr>
+        </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {sortedEmployees.map((employee) => (
               <tr key={employee.id} className="hover:bg-gray-50">
-                {visibleColumns.name && (
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">
-                      {employee.name}
-                    </div>
-                  </td>
-                )}
-                {visibleColumns.email && (
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {employee.email}
-                    </div>
-                  </td>
-                )}
-                {visibleColumns.position && (
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {employee.position}
-                    </div>
-                  </td>
-                )}
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">
+                    {employee.name}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">
+                    {employee.email}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">
+                    {employee.position}
+                  </div>
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <button
                     onClick={() => onEdit(employee)}

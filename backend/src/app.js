@@ -20,14 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/employees', employeeRoutes);
 
-// Health check endpoint
-app.get('/api/health', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'Employee Management API is running',
-    timestamp: new Date().toISOString()
-  });
-});
 
 // 404 handler
 app.use((req, res) => {
@@ -49,6 +41,4 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  console.log(`Health check: http://localhost:${PORT}/api/health`);
-  console.log(`API Base URL: http://localhost:${PORT}/api/employees`);
 });

@@ -7,7 +7,6 @@ A simple CRUD application for managing employee data. Built with React frontend 
 - Add, edit, delete employees
 - Search and filter employees
 - Sort table columns
-- Show/hide columns
 - Export data to CSV
 - Responsive design
 
@@ -74,13 +73,6 @@ The application uses SQLite database which is automatically created when you sta
 **Database Schema:**
 - `employees` table with fields: id, name, email, position, created_at, updated_at
 
-## Running Tests
-
-To run the backend tests:
-```bash
-cd backend
-npm test
-```
 
 ## API Endpoints
 
@@ -88,7 +80,6 @@ npm test
 - `POST /api/employees` - Create new employee
 - `PUT /api/employees/:id` - Update employee
 - `DELETE /api/employees/:id` - Delete employee
-- `GET /api/health` - Health check
 
 ## Usage
 
@@ -98,8 +89,7 @@ npm test
 4. Delete employees with the "Delete" button
 5. Use the search bar to filter employees
 6. Click column headers to sort data
-7. Use the "Columns" button to show/hide columns
-8. Export data using the "CSV" button
+7. Export data using the "CSV" button
 
 ## Project Structure
 
@@ -113,7 +103,6 @@ VertoProject/
 │   │   ├── middleware/
 │   │   ├── config/
 │   │   └── app.js
-│   ├── tests/
 │   └── package.json
 └── frontend/         # React frontend
     ├── src/
