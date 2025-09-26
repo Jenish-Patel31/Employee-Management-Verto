@@ -2,6 +2,8 @@
 
 A simple CRUD application for managing employee data. Built with React frontend and Node.js backend.
 
+Live Link: https://employee-management-verto.vercel.app/
+
 ## Features
 
 - Add, edit, delete employees
